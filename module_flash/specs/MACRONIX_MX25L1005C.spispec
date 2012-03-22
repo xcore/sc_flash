@@ -1,0 +1,23 @@
+    MACRONIX_MX25L1005C,
+    256,                   /* Page size */
+    512,                   /* Number of pages */
+    3,                     /* Address size */
+    8,                     /* Clock divider */
+    0x9F,                  /* RDID cmd */
+    0,                     /* RDID dummy bytes */
+    3,                     /* RDID data size in bytes */
+    0xC22011,              /* RDID data */
+    0x20,                  /* SE cmd */
+    0,                     /* SE full sector erase */
+    0x06,                  /* WREN cmd */
+    0x04,                  /* WRDI cmd */
+    PROT_TYPE_SR,          /* Protection type */
+    {{0x0C, 0x00},{0,0}},  /* SR protect and unprotect values */
+    0x02,                  /* PP cmd */
+    0x0B,                  /* FAST_READ cmd */
+    1,                     /* FAST_READ dummy bytes */
+    SECTOR_LAYOUT_REGULAR, /* Sector layout */
+    {4096,{0,{0}}},        /* Sector sizes */
+    0x05,                  /* RDSR cmd */
+    0x01,                  /* WRSR cmd */
+    0x01,                  /* WIP bit mask in SR */

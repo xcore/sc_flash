@@ -1,0 +1,23 @@
+    AMIC_A25L40PT,
+    256,                    /* page size */
+    2048,                   /* num pages */
+    3,                      /* address size */
+    5,                      /* log2 clock divider */
+    0x9F,                   /* SPI_RDID */
+    0,                      /* id dummy bytes */
+    4,                      /* id size in bytes */
+    0x7F372013,             /* device id */
+    0xD8,                   /* SPI_SE */
+    0,                      /* erase is full sector */
+    0x06,                   /* SPI_WREN */
+    0x04,                   /* SPI_WRDI */
+    SEC_PROT_SR,            /* no sector protection */
+    {{0x1c,0x0},{0,0}},    /* SR values for protection */
+    0x02,                   /* SPI_PP */
+    0x0B,                   /* SPI_READ_FAST */
+    1,                      /* skip the read dummy */
+    SECTOR_LAYOUT_IRREGULAR,  /* irregular sectors */
+    {0,{12,{8,8,8,8,8,8,8,7,6,5,4,4}}},        /* irregular sector sizes */
+    0x05,                   /* SPI_RDSR */
+    0x01,                   /* SPI_WRSR */
+    0x01,                   /* SPI_WIP_BIT_MASK */

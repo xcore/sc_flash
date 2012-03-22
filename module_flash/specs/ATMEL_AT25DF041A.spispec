@@ -1,0 +1,23 @@
+    ATMEL_AT25DF041A,
+    256,                    /* page size */
+    2048,                   /* num pages */
+    3,                      /* address size */
+    8,                      /* log2 clock divider */
+    0x9F,                   /* SPI_RDID */
+    0,                      /* id dummy bytes */
+    3,                      /* id size in bytes */
+    0x1f4401,               /* device id */
+    0x20,                   /* SPI_BE4 */
+    4096,                   /* Sector erase is always 4KB */
+    0x06,                   /* SPI_WREN */
+    0x04,                   /* SPI_WRDI */
+    PROT_TYPE_SECS,         /* no protection */
+    {{0,0},{0x36,0x39}},    /* SPI_SP, SPI_SU */
+    0x02,                   /* SPI_PP */
+    0x0B,                   /* SPI_READ_FAST */
+    1,                      /* 1 read dummy byte */
+    SECTOR_LAYOUT_IRREGULAR,  /* mad sectors */
+    {0,{11,{8,8,8,8,8,8,8,7,5,5,6}}},  /* regular sector sizes */
+    0x05,                   /* SPI_RDSR */
+    0x01,                   /* SPI_WRSR */
+    0x01,                   /* SPI_WIP_BIT_MASK */

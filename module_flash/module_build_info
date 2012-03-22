@@ -1,0 +1,42 @@
+# This module_build_info is for a module that builds to a library
+
+# The LIBRARY variable needs to be set to the name of the library to
+# be built
+
+LIBRARIES = flash_dev
+
+# You can set flags specifically for your module by using the MODULE_XCC_FLAGS
+# variable. So the following
+#
+#   MODULE_XCC_FLAGS = $(XCC_FLAGS) -O3
+#
+# specifies that everything in the modules should have the application
+# build flags with -O3 appended (so the files will build at
+# optimization level -O3).
+#
+# You can also set MODULE_XCC_C_FLAGS, MODULE_XCC_XC_FLAGS etc..
+
+MODULE_XCC_FLAGS = -O3
+
+# The EXPORT_SOURCE_DIRS variable are the directories that contain
+# include files for the library and any source files that you do not
+# want compiled into the library but supplied as source to the
+# application using the module.
+
+EXPORT_SOURCE_DIRS = include
+
+GENERATED_FILES = SpecDefinitions.h SpecMacros.h SpecEnum.h
+LIB_XCC_FLAGS_flash = -DFL_BOOT_PARTITION_SIZE=65536 -Os -Wall
+
+GENERATED_HEADER_EXPORT_DIR=include
+
+$(GEN_DIR)/buildLists.generated: $(CURRENT_MODULE_DIR)/src/BuildLists.pl | $(GEN_DIR)
+	@echo "Generating headers from spec files"
+	@echo "generated" > $(GEN_DIR)/buildLists.generated
+	@perl $(CURRENT_MODULE_DIR)/src/BuildLists.pl $(CURRENT_MODULE_DIR)/specs  $(GEN_DIR)/SpecDefinitions.h $(GEN_DIR)/SpecMacros.h $(GEN_DIR)/SpecEnum.h $(GEN_DIR)/XflashCode.cpp
+
+$(GEN_DIR)/SpecDefinitions.h: $(GEN_DIR)/buildLists.generated
+$(GEN_DIR)/SpecMacros.h: $(GEN_DIR)/buildLists.generated
+$(GEN_DIR)/SpecEnum.h: $(GEN_DIR)/buildLists.generated
+
+

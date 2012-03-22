@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<xpd>
+    <dependency repo = "xcommon">
+        <githash>f035daf04c248b398925a9ac74a60719d9f194c3</githash>
+        <uri>ssh://git@github.com/xcore/xcommon</uri>
+    </dependency>
+    <description>SPI Flash Library.</description>
+    <name>sc_flash</name>
+    <maintainer>davelxmos</maintainer>
+    <vendor>XMOS</vendor>
+    <xpd_version>1.0</xpd_version>
+</xpd>
