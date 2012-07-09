@@ -1,4 +1,17 @@
+/** This function reads a block of data from the flash at the given
+ * address.
 
+ * \param address the address to send to the SPI device. Only the least
+ *                significant 24 bits are used.
+ *
+ * \param data    an array of data to which data is to be written from
+ *                the flash device.
+ *
+ * \param bytes   The number of bytes that are to be read from the device
+ *                into ``data``.
+ *
+ */
+void spiFlashRead(int address, char data[],int bytes);
 #define spiFlashRead(address,data,bytes) spiCommandAddressStatus(SPI_CMD_READ,address,data,bytes)
 
 /** This function writes a small block of data to the flash at the given
