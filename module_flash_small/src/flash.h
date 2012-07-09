@@ -81,6 +81,14 @@ int spiFlashPersistentStateRead(char data[]);
  * microseconds, and if spiFlashPersistentStateRead() has not been called
  * then a full search of flash may be necessary.
  *
+ * Many calls to this function will wear out the flash memory. A flash
+ * memory may wear out after as little as 100,000 cycles, so if this
+ * function is called every 200 us, and the segment is 8192 bytes for
+ * 15-bytes of data, then the memory will wear out in (8192/(15+1)) *
+ * 100,000 * 0.0002 seconds, which is about 3 hours. Calls to this function
+ * should therefore be limited (for example to at most once every few
+ * seconds), or the persistent segment should be made much larger.
+ *
  * Note that there are hypothetical cases where valid data may be found if
  * the erase function is interrupted by a power failure. A CRC check shall
  * be performed on the data if this is an issue for the application.
