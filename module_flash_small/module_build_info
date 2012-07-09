@@ -1,1 +1,1 @@
-MODULE_XCC_FLAGS = -O3 -g
+MODULE_XCC_FLAGS = -fllvm -O2 -g
