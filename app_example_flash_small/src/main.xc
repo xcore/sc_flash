@@ -1,4 +1,5 @@
 #include <lld.h>
+#include <flash.h>
 #include <stdio.h>
 
 main() {
@@ -17,14 +18,21 @@ main() {
     for(int i = 0; i < 128; i++) {
 //        printf("%02x: %02x\n", i, spiCommandStatus(i, 1));
     }
-    spiCommandAddressStatus(SPI_CMD_READ, addr, data, 32);
+    spiFlashRead(addr, data, 32);
     for(int i = 0; i < 32; i++) {
         printf(" %02x", data[i]);
         data[i] &= (1<<(i&7));
     }
     printf("\n");
-    spiFlashWrite(addr, data, 32);
-    spiCommandAddressStatus(SPI_CMD_READ, addr, data, 32);
+    spiFlashErase4K(addr, 32);
+    spiFlashRead(addr, data, 32);
+    for(int i = 0; i < 32; i++) {
+        printf(" %02x", data[i]);
+        data[i] &= (1<<(i&7));
+    }
+    printf("\n");
+    spiFlashWriteSmall(addr, data, 32);
+    spiFlashRead(addr, data, 32);
     for(int i = 0; i < 32; i++) {
         printf(" %02x", data[i]);
     }

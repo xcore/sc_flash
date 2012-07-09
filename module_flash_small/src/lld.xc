@@ -80,12 +80,3 @@ void spiCommandAddressStatus(int cmd, int addr, char data[], int returnBytes) {
     }
     spiSS <: 1;
 }
-
-void spiFlashWrite(int address, char data[],int bytes) {
-    spiCommandStatus(SPI_CMD_WRITE_ENABLE, 0);
-    spiCommandAddressStatus(SPI_CMD_WRITE,address,data,-(bytes));
-    while(spiCommandStatus(SPI_CMD_READSR, 1) & 1) {
-        ;
-    }
-    spiCommandStatus(SPI_CMD_WRITE_DISABLE, 0);
-}
