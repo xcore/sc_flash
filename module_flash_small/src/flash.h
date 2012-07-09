@@ -1,3 +1,8 @@
+#ifndef FLASH_H
+#define FLASH_H
+
+#include "spih"
+
 /** This function reads a block of data from the flash at the given
  * address.
 
@@ -109,3 +114,5 @@ int spiFlashPersistentStateRead(char data[]);
  * \param data array in which the persistent data to be written is stored.
  */
 void spiFlashPersistentStateWrite(char data[]);
+
+#endif
