@@ -1,7 +1,7 @@
 #ifndef FLASH_H
 #define FLASH_H
 
-#include "spih"
+#include "spi.h"
 
 /** This function reads a block of data from the flash at the given
  * address.
@@ -57,8 +57,8 @@ void spiFlashWrite(int address, char data[],int bytes);
 
 /** This function erases a block of data in the flash at the given address.
  * This will replace the block with all '1' bits. The address should be
- * aligned on a 4K boundary, and the length should be a whole number of 4K
- * blocks.
+ * aligned on a SPI_SECTOR_SIZE boundary, and the length should be a whole
+ * number of SPI_SECTOR_SIZE bytes.
  *
  * \param address the address to send to the SPI device. Only the least
  *                significant 24 bits are used.
@@ -66,7 +66,7 @@ void spiFlashWrite(int address, char data[],int bytes);
  * \param bytes   The number of bytes that are to be erased.
  *
  */
-void spiFlashErase4K(int address, int bytes);
+void spiFlashErase(int address, int bytes);
 
 /** This function reads persistent data from flash memory. The size of hte
  * persistent data, the base address and the segment size are all compile

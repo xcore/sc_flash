@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "flash.h"
-#include "lld.h"
 #include "flashDefaults.h"
 
 void spiFlashWriteSmall(int address, char data[],int bytes) {
@@ -22,11 +21,11 @@ void spiFlashWrite(int address, char data[],int bytes) {
     }
 }
 
-void spiFlashErase4K(int address, int bytes) {
+void spiFlashErase(int address, int bytes) {
     char data[1];
     spiCommandStatus(SPI_CMD_WRITE_ENABLE, 0);
     while (bytes > 0) {
-        spiCommandAddressStatus(SPI_CMD_ERASE_4K, address, data, 0);
+        spiCommandAddressStatus(SPI_CMD_ERASE, address, data, 0);
         bytes -= 4096;
         address += 4096;
         while(spiCommandStatus(SPI_CMD_READSR, 1) & 1) {
@@ -54,12 +53,14 @@ static int flashStartAddress = 0;
  * just one step old.
  */
 int spiFlashPersistentStateRead(char data[]) {
+    char guard[1];
     for(int i = flashStartAddress;
         i < flashStartAddress + FLASH_PERSISTENT_SEGMENT_SIZE; 
         i+= FLASH_PERSISTENT_SIZE + 1) {
         int index = (i&(FLASH_PERSISTENT_SEGMENT_SIZE-1));
-        spiFlashRead(FLASH_PERSISTENT_BASE + index, data, FLASH_PERSISTENT_SIZE + 1);
-        if (data[FLASH_PERSISTENT_SIZE] == VALID) {
+        spiFlashRead(FLASH_PERSISTENT_BASE + index + FLASH_PERSISTENT_SIZE, guard, 1);
+        if (guard[0] == VALID) {
+            spiFlashRead(FLASH_PERSISTENT_BASE + index, data, FLASH_PERSISTENT_SIZE);
             flashStartAddress = index;
             return 1;
         }
@@ -77,7 +78,7 @@ int spiFlashPersistentStateRead(char data[]) {
  * write has completed before the guard byte write is completed), and
  * finally the old guard byte is cleared.
  *
- * This process can eb interrupted at the following places without disruption:
+ * This process can be interrupted at the following places without disruption:
  *
  *   After erase - it will find the old block (there are always at least
  *   two sectors)
@@ -110,7 +111,7 @@ void spiFlashPersistentStateWrite(char data[]) {
         }
     }
     if ((writeIndex & (FLASH_PERSISTENT_SECTOR_SIZE -1)) == 0) {
-        spiFlashErase4K(FLASH_PERSISTENT_BASE + writeIndex, FLASH_PERSISTENT_SECTOR_SIZE);
+        spiFlashErase(FLASH_PERSISTENT_BASE + writeIndex, FLASH_PERSISTENT_SECTOR_SIZE);
     }
     spiFlashWriteSmall(FLASH_PERSISTENT_BASE + writeIndex, data, 15);
     guard[0] = VALID;

@@ -1,6 +1,6 @@
 #include <xs1.h>
 #include <xclib.h>
-#include "lld.h"
+#include "spi.h"
 #include <platform.h>
 #include <stdio.h>
 

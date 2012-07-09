@@ -2,27 +2,76 @@ module_flash_small
 ''''''''''''''''''
 
 This module implements a simple flash library, sufficient for DFU and
-similar applications. Two files are to be included ``lld.h`` and
-``flash.h``.
-
+similar applications. There are two include files: ``spi.h`` which is to be
+used if ony low level SPI functions are used, or ``flash.h`` which includes
+higher level functions to interact with SPI flash.
 
 SPI API
 =======
+
+Defines
+-------
+
+There are two defines to deal with flash interoperability. There is no need
+to worry about these if you only read flash. If you need to write to flash,
+you must check that these are compatible with *all* flash devices that you
+intend to support. See See the section on interoperability for an
+explanation.
+
+**SPI_CMD_ERASE**
+
+  The command byte that erases a sector in SPI. The default value 0x20,
+  works for about half the SPI flash devices.
+
+**SPI_SECTOR_SIZE**
+
+  The number of bytes that a sector-erase erases. The default value, 4096
+  bytes, is compatible with about half of the flash devices.
+
+
+Functions
+---------
 
 .. doxygenfunction:: spiInit
 .. doxygenfunction:: spiCommandStatus
 .. doxygenfunction:: spiCommandAddressStatus
 
-.. doxygendefine:: SPI_CMD_WRITE_ENABLE
-.. doxygendefine:: SPI_CMD_WRITE_DISABLE
-
 Flash API
 =========
+
+Defines
+-------
+
+There are three defines that can be tuned to change the persistent state
+handling - only important if  spiFlashPersistentStateRead() and
+spiFlashPersistentStateWrite() are used.
+
+**FLASH_PERSISTENT_SIZE**
+
+  The size of persistent data in bytes. When using the functions
+  spiFlashPersistentStateRead() and spiFlashPersistentStateWrite() this
+  indicates how much data is read or written. The default is 15 bytes; the
+  number of bytes plus one must be a power of 2.
+
+**FLASH_PERSISTENT_BASE**
+
+  The based address of the persistent data in flash. This must be a sector
+  boundary. The default is 65536.
+
+
+**FLASH_PERSISTENT_SEGMENT_SIZE**
+
+  The size of the persistent data segment in bytes. The persistent data
+  segment must be at least two sectors long; longer segments take more
+  space but wear out less quickly. The default is 2 sectors.
+
+Functions
+---------
 
 .. doxygenfunction:: spiFlashRead
 .. doxygenfunction:: spiFlashWriteSmall
 .. doxygenfunction:: spiFlashWrite
-.. doxygenfunction:: spiFlashErase4K
+.. doxygenfunction:: spiFlashErase
 .. doxygenfunction:: spiFlashPersistentStateRead
 .. doxygenfunction:: spiFlashPersistentStateWrite
 
@@ -91,16 +140,16 @@ employ and verify that all of those are compatible.
 Example
 =======
 
-An example that reads, erases and writes data:
-
-.. literalinclude:: app_example_flash_small/src/main.xc
-  :start-after: //::flash program
-  :end-before: //::
-
 An example that uses the SPI library to read the ID:
 
 .. literalinclude:: app_example_flash_small/src/main.xc
   :start-after: //::spi program
+  :end-before: //::
+
+An example that reads, erases and writes data:
+
+.. literalinclude:: app_example_flash_small/src/main.xc
+  :start-after: //::flash program
   :end-before: //::
 
 An example that uses the flash library to store some persistent data (such

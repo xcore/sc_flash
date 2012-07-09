@@ -1,17 +1,24 @@
 #ifndef SPI_H
 #define SPI_H
 
-#define SPI_CMD_WRITE_ENABLE   0x06    /**< SPI command to enable write and erase operations */
+#ifdef __spi_conf_h_exists__
+#include "spi_conf.h"
+#endif
 
-/** \def SPI command to disable write and erase operations */
+#define SPI_CMD_WRITE_ENABLE   0x06    /**< SPI command to enable write and erase operations */
 #define SPI_CMD_WRITE_DISABLE  0x04
 #define SPI_CMD_WRITE          0x02
-#define SPI_CMD_ERASE_4K       0x20
-#define SPI_CMD_ERASE_32K      0x52
-#define SPI_CMD_ERASE_64K      0xD8
 #define SPI_CMD_READ           0x03
 #define SPI_CMD_READSR         0x05
 #define SPI_CMD_READID         0x9f
+
+#ifndef SPI_CMD_ERASE
+#define SPI_CMD_ERASE          0x20
+#endif
+
+#ifndef SPI_SECTOR_SIZE
+#define SPI_SECTOR_SIZE        4096
+#endif
 
 /** This function is to be called prior to any SPI operation. It initialises the ports.
   */

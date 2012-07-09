@@ -1,4 +1,3 @@
-#include <lld.h>
 #include <flash.h>
 #include <stdio.h>
 
@@ -10,6 +9,8 @@ useSPI() {
     printf("ID4: %08x\n",spiCommandStatus(SPI_CMD_READID, 4));
 }
 //::
+
+#define spiInit()    ;
 
 //::flash program
 #include <flash.h>
@@ -24,7 +25,7 @@ useFlash() {
         printf(" %02x", data[i]);
     }
     printf("\n");
-    spiFlashErase4K(addr, 32);
+    spiFlashErase(addr, 32);
     spiFlashRead(addr, data, 32);
     for(int i = 0; i < 32; i++) {
         printf(" %02x", data[i]);
@@ -46,18 +47,21 @@ useFlash() {
 //::persistence program
 #include <flash.h>
 
+char state[15];
+
 usePersistence() {
-    char data[16];
     int valid;
     spiInit();
 
-    valid = spiFlashPersistentStateRead(data);
+    valid = spiFlashPersistentStateRead(state);
     if (!valid) {
-        // fill data with factory default
+        // fill state[] with factory default
     }
-    // update state
 
-    spiFlashPersistentStateWrite(data);
+    //...
+    // update state
+    spiFlashPersistentStateWrite(state);
+    //...
 }
 //::
 
