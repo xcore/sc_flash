@@ -50,4 +50,41 @@ void spiFlashWrite(int address, char data[],int bytes);
  */
 void spiFlashErase4K(int address, int bytes);
 
+/** This function reads persistent data from flash memory. The size of hte
+ * persistent data, the base address and the segment size are all compile
+ * time constants (defined earlier). A not-so-small library can be made
+ * that provides generic functionality.
+ *
+ * This function may take some time to complete - in the worst case it will
+ * search the whole persistent segment for valid data. The time taken
+ * depends on the persisten segment size and flash speed, but may well be
+ * milliseconds. Note that the read position is cached, so subsequent calls
+ * to this function will be fast.
+ *
+ * \param data array in which the persistent data is to be stored.
+ *
+ * \returns 0 if no valid data could be found. A factory default should be
+ * used in this case.
+ */
 int spiFlashPersistentStateRead(char data[]);
+
+/** This function writes persistent data to flash memory. The size of hte
+ * persistent data, the base address and the segment size are all compile
+ * time constants (defined earlier). If this function returns, then the
+ * next call to spiFlashPersistentStateRead() will return the data that is
+ * written in this call.
+ *
+ * This function may take some time to complete - it will wait for data to
+ * be written, and it may have to erase a sector of data. The time taken
+ * depends mostly on flash speed, but may well be tens of milliseconds when
+ * a sector needs to be erased. A write operation may take a few hundred
+ * microseconds, and if spiFlashPersistentStateRead() has not been called
+ * then a full search of flash may be necessary.
+ *
+ * Note that there are hypothetical cases where valid data may be found if
+ * the erase function is interrupted by a power failure. A CRC check shall
+ * be performed on the data if this is an issue for the application.
+ *
+ * \param data array in which the persistent data to be written is stored.
+ */
+void spiFlashPersistentStateWrite(char data[]);

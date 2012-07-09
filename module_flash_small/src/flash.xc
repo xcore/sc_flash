@@ -95,25 +95,27 @@ int spiFlashPersistentStateRead(char data[]) {
  * 'valid'. This code cannot deal with it, but a full and large version
  * would put a CRC over the data to validate the guard.
  */
-int spiFlashPersistentStateWrite(char data[]) {
+void spiFlashPersistentStateWrite(char data[]) {
     char guard[1];
-    int i, readIndex, writeIndex = 0;
-    for(i = flashStartAddress + FLASH_PERSISTENT_SIZE;
+    int i, writeIndex = 0, clearIndex = FLASH_PERSISTENT_SEGMENT_SIZE - FLASH_PERSISTENT_SIZE;
+    for(i = flashStartAddress;
         i < flashStartAddress + FLASH_PERSISTENT_SEGMENT_SIZE; 
         i+= FLASH_PERSISTENT_SIZE + 1) {
-        readIndex = (i&(FLASH_PERSISTENT_SEGMENT_SIZE-1));
-        spiFlashRead(FLASH_PERSISTENT_BASE + readIndex, guard, 1);
+        int readIndex = (i&(FLASH_PERSISTENT_SEGMENT_SIZE-1));
+        spiFlashRead(FLASH_PERSISTENT_BASE + readIndex + FLASH_PERSISTENT_SIZE, guard, 1);
         if (guard[0] == VALID) {
-            writeIndex = (readIndex+FLASH_PERSISTENT_SIZE)&(FLASH_PERSISTENT_SEGMENT_SIZE-1);
+            clearIndex = readIndex;
+            writeIndex = (readIndex+FLASH_PERSISTENT_SIZE+1)&(FLASH_PERSISTENT_SEGMENT_SIZE-1);
             break;
         }
     }
     if ((writeIndex & (FLASH_PERSISTENT_SECTOR_SIZE -1)) == 0) {
         spiFlashErase4K(FLASH_PERSISTENT_BASE + writeIndex, FLASH_PERSISTENT_SECTOR_SIZE);
     }
-    spiFlashWrite(FLASH_PERSISTENT_BASE + writeIndex, data, 15);
-    spiFlashWrite(FLASH_PERSISTENT_BASE + writeIndex + FLASH_PERSISTENT_SIZE, guard, 1);
+    spiFlashWriteSmall(FLASH_PERSISTENT_BASE + writeIndex, data, 15);
+    guard[0] = VALID;
+    spiFlashWriteSmall(FLASH_PERSISTENT_BASE + writeIndex + FLASH_PERSISTENT_SIZE, guard, 1);
     guard[0] = INVALID;
-    spiFlashWrite(FLASH_PERSISTENT_BASE + readIndex, guard, 1);
-    flashStartAddress = readIndex;
+    spiFlashWriteSmall(FLASH_PERSISTENT_BASE + clearIndex + FLASH_PERSISTENT_SIZE, guard, 1);
+    flashStartAddress = writeIndex;
 }
