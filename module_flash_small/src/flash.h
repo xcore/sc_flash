@@ -49,3 +49,5 @@ void spiFlashWrite(int address, char data[],int bytes);
  *
  */
 void spiFlashErase4K(int address, int bytes);
+
+int spiFlashPersistentStateRead(char data[]);
