@@ -23,11 +23,11 @@ void spiFlashWrite(int address, char data[],int bytes) {
 
 void spiFlashErase(int address, int bytes) {
     char data[1];
-    spiCommandStatus(SPI_CMD_WRITE_ENABLE, 0);
     while (bytes > 0) {
+        spiCommandStatus(SPI_CMD_WRITE_ENABLE, 0);
         spiCommandAddressStatus(SPI_CMD_ERASE, address, data, 0);
-        bytes -= 4096;
-        address += 4096;
+        bytes -= SPI_SECTOR_SIZE;
+        address += SPI_SECTOR_SIZE;
         while(spiCommandStatus(SPI_CMD_READSR, 1) & 1) {
             ;
         }

@@ -1,1 +1,3 @@
-MODULE_XCC_FLAGS = -fllvm -O2 -g
+OPTIONAL_HEADERS += spi_conf.h
+
+MODULE_XCC_FLAGS =-O2 -g
