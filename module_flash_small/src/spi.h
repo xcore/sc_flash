@@ -20,6 +20,10 @@
 #define SPI_SECTOR_SIZE        4096
 #endif
 
+#ifndef SPI_CLK_MHZ
+#define SPI_CLK_MHZ              25
+#endif
+
 /** This function is to be called prior to any SPI operation. It initialises the ports.
   */
 void spiInit();

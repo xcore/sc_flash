@@ -2,12 +2,22 @@ module_flash_small
 ''''''''''''''''''
 
 This module implements a simple flash library, sufficient for DFU and
-similar applications. There are two include files: ``spi.h`` which is to be
-used if only low level SPI functions are used, or ``flash.h`` which includes
-higher level functions to interact with SPI flash.
+similar applications. It has a number of restrictions compared to the
+flash-library in module_flash``:
 
-In order to set one or more of the ``#define`` below, create a source file
-``spi_conf.h`` containing all the defines.
+* No support for changing write-protection (but any protection that is is
+  set-up will be honoured).
+
+* Sector size, speed and SPI commands are compiled-in, and hence only
+  binary-compatible devices are supported once you have created your binary.
+
+* Only a single instance is supported in a program (ie, you cannot use two
+  separate flash devices simultaneously)
+
+The library is configured using compile-time defines. The ports are
+normally defined in the XN file. Any other define should be placed in a
+source file ``spi_conf.h`` that will be picked up by the build-system.
+
 
 SPI API
 =======
@@ -18,8 +28,13 @@ Defines
 There are two defines to deal with flash interoperability. There is no need
 to worry about these if you only read flash. If you need to write to flash,
 you must check that these are compatible with *all* flash devices that you
-intend to support. See See the section on interoperability for an
+intend to support. See the section on interoperability for an
 explanation.
+
+**SPI_CLK_MHZ**
+
+  The maximum speed of the flash device in MHz. The default value is 25,
+  the only other value supported is 13 (resulting in a 12.5 MHz SPI clock).
 
 **SPI_CMD_ERASE**
 
@@ -31,9 +46,30 @@ explanation.
   The number of bytes that a sector-erase erases. The default value, 4096
   bytes, is compatible with about half of the flash devices.
 
+**PORT_SPI_SS**
+
+  The port to which the SPI slave select signal is connected. Normally
+  defined in the XN file.
+
+**PORT_SPI_CLK**
+
+  The port to which the SPI clock signal is connected. Normally
+  defined in the XN file.
+
+**PORT_SPI_MISO**
+
+  The port to which the SPI master-in slave-out is connected. Normally
+  defined in the XN file.
+
+**PORT_SPI_MOSI**
+
+  The port to which the SPI master-out slave-in is connected. Normally
+  defined in the XN file.
 
 Functions
 ---------
+
+These functions are defined in ``spi.h``.
 
 .. doxygenfunction:: spiInit
 .. doxygenfunction:: spiCommandStatus
@@ -70,6 +106,8 @@ spiFlashPersistentStateWrite() are used.
 
 Functions
 ---------
+
+These functions are defined in ``flash.h``.
 
 .. doxygenfunction:: spiFlashRead
 .. doxygenfunction:: spiFlashWriteSmall

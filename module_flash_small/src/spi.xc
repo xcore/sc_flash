@@ -4,7 +4,6 @@
 #include <platform.h>
 #include <stdio.h>
 
-#define FLASH_25MHz
 out port spiSS              = PORT_SPI_SS;
 buffered out port:32 spiCLK = PORT_SPI_CLK;
 buffered in  port:8 spiMISO = PORT_SPI_MISO;
@@ -23,18 +22,12 @@ void spiInit() {
     configure_in_port(spiMISO, SPIclock);
 }
 
-#if defined(FLASH_50MHz)
-#define eightPulses(clk)     { clk <: 0xAAAA;} 
-#elif defined(FLASH_25MHz)
+#if (SPI_CLK_MHZ == 25)
 #define eightPulses(clk)     { clk <: 0xCCCCCCCC;} 
-#elif defined(FLASH_12_5MHz)
+#elif (SPI_CLK_MHZ == 13)
 #define eightPulses(clk)     { clk <: 0xF0F0F0F0; clk <: 0xF0F0F0F0;} 
-#elif defined(FLASH_1_6MHz)
-#define eightPulses(clk)     { for(int i = 0; i < 8; i++) { clk <: 0; clk <: ~0;}}
-#elif defined(FLASH_0_8MHz)
-#define eightPulses(clk)     { for(int i = 0; i < 8; i++) { clk <: 0; clk <: 0; clk <: ~0; clk <: ~0;}}
 #else
-#error "Undefined FLASH speed  - must be one of 50, 25, or 12_5"
+#error "Undefined SPI_CLK_MHZ speed  - must be one of 25 or 13"
 #endif
 
 static void spiCmd(int cmd) {
