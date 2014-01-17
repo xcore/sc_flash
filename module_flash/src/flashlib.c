@@ -8,6 +8,7 @@
 #include "SpecDefinitions.h"
 
 #define IMAGETAG (0x1a551e5)
+#define IMAGETAG_13 (0x0FF51DE)
 
 #define MAX_PAGE_SIZE 256
 
@@ -531,23 +532,38 @@ int fl_getFactoryImage( fl_BootImageInfo* bootImageInfo )
   unsigned startAddr = (sortBits(tmpBuf[0])+2)<<2; /* Normal case. */
   fl_int_readBytes(g_flashAccess, startAddr, (unsigned char*)tmpBuf, (6 + 3) * sizeof(int));
   unsigned *header = tmpBuf;
+  unsigned int image13 = 0;
   if (sortBits(tmpBuf[0]) != IMAGETAG) {
-    header += 3; /* Secure case. */
-    if (sortBits(header[0]) != IMAGETAG) {
-      return 1;
+    if (sortBits(tmpBuf[0]) != IMAGETAG_13) {
+      header += 3; /* Secure case. */
+      if (sortBits(header[0]) != IMAGETAG) {
+        if (sortBits(header[0]) != IMAGETAG_13) {
+          return 1;
+        }
+        else {
+          image13 = 1;
+        }
+      }
     }
+    else {
+      image13 = 1;
+    }
+    
   }
+  
+  /* Image headers changed format in  tools 13*/
   bootImageInfo->startAddress = startAddr;
-  bootImageInfo->size         = sortBits(header[5]);  /* Size is to next sector start. */
-  bootImageInfo->version      = sortBits(header[4]);
+  bootImageInfo->size         = (image13) ? sortBits(header[6]) : sortBits(header[5]);  /* Size is to next sector start. */
+  bootImageInfo->version      = (image13) ? sortBits(header[5]) : sortBits(header[4]);
   bootImageInfo->factory      = 1;
+  
   return 0;
 }
 
 /* Returns information about the next boot image. */
 int fl_getNextBootImage( fl_BootImageInfo* bootImageInfo )
 {
-  unsigned tmpBuf[6];
+  unsigned tmpBuf[7]; /* Image headers changed format in  tools 13*/
   unsigned numSectors = fl_getNumSectors();
   unsigned lastAddress = bootImageInfo->startAddress+bootImageInfo->size;
   unsigned sectorNum = getSectorAtOrAfter(lastAddress);
@@ -555,7 +571,7 @@ int fl_getNextBootImage( fl_BootImageInfo* bootImageInfo )
     return 1;
   while (sectorNum < numSectors) {
     unsigned sectorAddress = fl_getSectorAddress(sectorNum);
-    fl_int_readBytes(g_flashAccess, sectorAddress, (unsigned char*)tmpBuf, 6 * sizeof(int));
+    fl_int_readBytes(g_flashAccess, sectorAddress, (unsigned char*)tmpBuf, 7 * sizeof(int));
     if (sortBits(tmpBuf[0]) == IMAGETAG) {
       bootImageInfo->startAddress = sectorAddress;
       bootImageInfo->size         = sortBits(tmpBuf[5]);
@@ -563,6 +579,14 @@ int fl_getNextBootImage( fl_BootImageInfo* bootImageInfo )
       bootImageInfo->factory      = 0;
       return 0;
     }
+    else if (sortBits(tmpBuf[0]) == IMAGETAG_13) {        /*New image tag for tools 13*/ 
+      bootImageInfo->startAddress = sectorAddress;
+      bootImageInfo->size         = sortBits(tmpBuf[6]);  /*New location in image header*/
+      bootImageInfo->version      = sortBits(tmpBuf[5]);  /*New location in image header*/
+      bootImageInfo->factory      = 0;
+      return 0;
+    }
+    
     sectorNum++;
   }
   return 1;
@@ -846,7 +870,7 @@ int fl_startImageRead(fl_BootImageInfo *bootImageInfo)
   return 0;
 }
 
-int fl_readImageRead(unsigned char page[])
+int fl_readImagePage(unsigned char page[])
 {
   unsigned pageSize = fl_getPageSize();
   if (fl_imageReadState.currentAddress + pageSize > fl_imageReadState.limitAddress)

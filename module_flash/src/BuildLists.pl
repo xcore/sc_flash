@@ -22,8 +22,8 @@ $xflashFileName = $ARGV[4]; # "XflashCode.cpp";
 @enumorder = ( "ALTERA_EPCS1",    "ATMEL_AT25DF041A", "ST_M25PE10",     "ST_M25PE20",     "ATMEL_AT25FS010",
                "WINBOND_W25X40",  "AMIC_A25L016",     "AMIC_A25L40PT",  "AMIC_A25L40PUM", "AMIC_A25L80P",
                "ATMEL_AT25DF021", "ATMEL_AT25F512",   "ESMT_F25L004A",  "NUMONYX_M25P10", "NUMONYX_M25P16",
-               "NUMONYX_M45P10E", "SST_SST25VF010",   "SST_SST25VF016", "SST_SST25VF040", "WINBOND_W25X10",
-               "WINBOND_W25X20",  "AMIC_A25L40P",     "MACRONIX_MX25L1005C" );
+               "NUMONYX_M45P10E", "SPANSION_S25FL204K", "SST_SST25VF010",   "SST_SST25VF016", "SST_SST25VF040", 
+               "WINBOND_W25X10", "WINBOND_W25X20",  "AMIC_A25L40P",     "MACRONIX_MX25L1005C" , "MICRON_M25P40" );
 
 #
 # Some names which should be listed in xflash last to avoid confusion between devices.

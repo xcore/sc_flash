@@ -15,6 +15,7 @@
 
 #ifndef _flash_h_
 #define _flash_h_
+#include <xs1_clock.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -353,7 +354,20 @@ int fl_startImageRead(fl_BootImageInfo &bootImageInfo);
  * \param page Array to fill with image data.
  * \return 0 on success, non zero on failure.
  */
-int fl_readImageRead(unsigned char page[]);
+int fl_readImagePage(unsigned char page[]);
+
+/**
+ * fl_readImageRead is deprecated - use fl_readImagePage instead.
+ */
+#ifdef __XC__
+#define fl_readImageRead(page) _Pragma("warning \"fl_readImageRead is deprecated, use fl_readImagePage instead\"") fl_readImagePage(page)
+#else
+__attribute__((deprecated)) static inline int fl_readImageRead(unsigned char page[])
+{
+  return fl_readImagePage(page);
+}
+#endif
+
 
 /* Data partition functions. */
 
