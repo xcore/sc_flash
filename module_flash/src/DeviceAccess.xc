@@ -216,12 +216,12 @@ int fl_int_programPage( const fl_DeviceSpec& flashAccess, unsigned int pageAddre
 }
 
 #pragma unsafe arrays
-static void fl_int_readPageBlock( in buffered port:8 prt, unsigned char data[], unsigned int numBytes )
+static void fl_int_readPageBlock(unsigned char data[], unsigned int numBytes )
 {
   unsigned int tmp;
   for (int i=0; i<numBytes; i++)
   {
-    prt :> tmp;
+    g_portHolder.spiMISO :> tmp;
     data[i] = bitrev(tmp<<24);
   }
   stop_clock(g_portHolder.spiClkblk);
@@ -250,7 +250,7 @@ int fl_int_readBytes(const fl_DeviceSpec& flashAccess, unsigned pageAddress,
     g_portHolder.spiMISO :> void;
   }
 
-  fl_int_readPageBlock( g_portHolder.spiMISO, data, numBytes );
+  fl_int_readPageBlock( data, numBytes );
 
   g_portHolder.spiSS  <: 0x1;
   return(0);
