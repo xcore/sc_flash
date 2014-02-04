@@ -1,0 +1,10 @@
+app_*/.build_*/
+app_*/bin/
+doc/.doxygen/
+doc/.linked_dirs/
+doc/.sources/
+doc/Doxyfile-e
+doc/_build/
+doc/index.pdf
+module_flash/.build_flash_dev/
+module_flash/lib/
