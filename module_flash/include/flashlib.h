@@ -1,6 +1,6 @@
 /*
  * Copyright (C) XMOS Limited 2009 - 2010
- * 
+ *
  * The copyrights, all other intellectual and industrial property rights are
  * retained by XMOS and/or its licensors.
  *
@@ -123,7 +123,7 @@ int fl_addBootImage( fl_BootImageInfo* bootImageInfo, unsigned int imageSize, un
 #define fl_writeStore(offset, size, src, buffer) fl_writeData(offset, size, src, buffer)
 
 #ifdef __cplusplus
-} //extern "C" 
+} //extern "C"
 #endif
 
 #endif /* HAVE_FLASHLIB_H_ */

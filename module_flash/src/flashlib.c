@@ -548,15 +548,15 @@ int fl_getFactoryImage( fl_BootImageInfo* bootImageInfo )
     else {
       image13 = 1;
     }
-    
+
   }
-  
+
   /* Image headers changed format in  tools 13*/
   bootImageInfo->startAddress = startAddr;
   bootImageInfo->size         = (image13) ? sortBits(header[6]) : sortBits(header[5]);  /* Size is to next sector start. */
   bootImageInfo->version      = (image13) ? sortBits(header[5]) : sortBits(header[4]);
   bootImageInfo->factory      = 1;
-  
+
   return 0;
 }
 
@@ -579,14 +579,14 @@ int fl_getNextBootImage( fl_BootImageInfo* bootImageInfo )
       bootImageInfo->factory      = 0;
       return 0;
     }
-    else if (sortBits(tmpBuf[0]) == IMAGETAG_13) {        /*New image tag for tools 13*/ 
+    else if (sortBits(tmpBuf[0]) == IMAGETAG_13) {        /*New image tag for tools 13*/
       bootImageInfo->startAddress = sectorAddress;
       bootImageInfo->size         = sortBits(tmpBuf[6]);  /*New location in image header*/
       bootImageInfo->version      = sortBits(tmpBuf[5]);  /*New location in image header*/
       bootImageInfo->factory      = 0;
       return 0;
     }
-    
+
     sectorNum++;
   }
   return 1;

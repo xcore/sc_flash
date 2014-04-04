@@ -11,13 +11,13 @@ fl_SPIPorts SPI = { PORT_SPI_MISO,
                     PORT_SPI_CLK,
                     PORT_SPI_MOSI,
                     XS1_CLKBLK_1 };
-                        
+
 int upgrade(chanend c, int usize) {
 
-  /* obtain an upgrade image and write 
-   * it to flash memory 
+  /* obtain an upgrade image and write
+   * it to flash memory
    * error checking omitted */
-  
+
   fl_BootImageInfo b;
   unsigned char page[MAX_PSIZE];
   int psize;
@@ -42,11 +42,11 @@ int upgrade(chanend c, int usize) {
   fl_endWriteImage();
 
   fl_disconnect();
-  
+
    return 0;
 }
 
 int main() {
-  /* main application - calls upgrade 
+  /* main application - calls upgrade
    * to perform an in-field upgrade */
 }

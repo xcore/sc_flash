@@ -1,6 +1,6 @@
 /*
  * Copyright (C) XMOS Limited 2010
- * 
+ *
  * The copyrights, all other intellectual and industrial property rights are
  * retained by XMOS and/or its licensors.
  *
@@ -21,7 +21,7 @@
 extern "C" {
 #endif
 
-/** 
+/**
  * \file flash.h
  * \brief SPI Flash device access functions.
  *
@@ -110,7 +110,7 @@ typedef struct {
     unsigned regularSectorSize;
     struct {
       /** The number of sectors when the sector layout is irregular. */
-      unsigned char sectorCount; 
+      unsigned char sectorCount;
       /**
        * Log base 2 of the number in each sector when the sector layout is
        * irregular.
@@ -480,7 +480,7 @@ int fl_eraseAllDataSectors(void);
 #include "SpecMacros.h"
 
 #ifdef __cplusplus
-} //extern "C" 
+} //extern "C"
 #endif
 
 #endif /* _flash_h_ */
