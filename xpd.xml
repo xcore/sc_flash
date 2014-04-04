@@ -35,6 +35,7 @@
     <maintainer>davelxmos</maintainer>
     <partnumber>XM-005034-DH</partnumber>
     <release parenthash = "b15968a70934b1977291e23bf6b1de8775bf63a7" version = "1.0.0beta0" githash = "7fb428c91fcc1e42023a0d29cb5a8f0046559bf5"></release>
+    <release parenthash = "947fba0a53a0f767884a132e86b35f232a00dde9" version = "1.0.1beta0"></release>
     <subpartnumber>XM-005035-SM</subpartnumber>
     <vendor>XMOS</vendor>
     <version_defines></version_defines>
