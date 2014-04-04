@@ -3,8 +3,8 @@
     <components>
         <component description = "Quad SPI flash" type = "demoCode" scope = "General Use" path = "app_quad_spi_flash_testbench" local = "false" id = "app_quad_spi_flash_testbench" name = "Quad SPI Flash Testbench">
             <board>XA-SK-FLASH</board>
-            <componentDependency repo = "git://github.com/xcore/sc_flash.git" version = "1.0.0">module_quad_spi_flash</componentDependency>
             <componentDependency repo = "git://github.com/xcore/sc_slicekit_support.git" version = "1.0.4">module_slicekit_support</componentDependency>
+            <componentDependency repo = "git://github.com/xcore/sc_flash.git" version = "1.0.0">module_quad_spi_flash</componentDependency>
             <keyword>quad</keyword>
             <keyword>spi</keyword>
             <keyword>flash</keyword>

@@ -32,7 +32,7 @@ ports = {
     help    = "",
     width   = 1
   },
-   p_clk = {
+   p_dq = {
     short   = "DQ",
     long    = "Data",
     help    = "",
