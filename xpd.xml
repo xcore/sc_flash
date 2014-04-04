@@ -3,21 +3,21 @@
     <components>
         <component description = "Quad SPI flash" type = "demoCode" scope = "General Use" path = "app_quad_spi_flash_testbench" local = "false" id = "app_quad_spi_flash_testbench" name = "Quad SPI Flash Testbench">
             <board>XA-SK-FLASH</board>
+            <componentDependency repo = "git://github.com/xcore/sc_flash.git" version = "1.0.0">module_quad_spi_flash</componentDependency>
             <componentDependency repo = "git://github.com/xcore/sc_slicekit_support.git" version = "1.0.4">module_slicekit_support</componentDependency>
-            <componentDependency repo = "git://github.com/xcore/sc_flash.git">module_quad_spi_flash</componentDependency>
             <keyword>quad</keyword>
             <keyword>spi</keyword>
             <keyword>flash</keyword>
         </component>
         <component description = "Quad SPI flash" type = "demoCode" scope = "General Use" path = "app_quad_spi_flash_demo" local = "false" id = "app_quad_spi_flash_demo" name = "Quad SPI Flash Demo">
             <board>XA-SK-FLASH</board>
+            <componentDependency repo = "git://github.com/xcore/sc_flash.git" version = "1.0.0">module_quad_spi_flash</componentDependency>
             <componentDependency repo = "git://github.com/xcore/sc_slicekit_support.git" version = "1.0.4">module_slicekit_support</componentDependency>
-            <componentDependency repo = "git://github.com/xcore/sc_flash.git">module_quad_spi_flash</componentDependency>
             <keyword>quad</keyword>
             <keyword>spi</keyword>
             <keyword>flash</keyword>
         </component>
-        <component description = "provides library calls to perform I/O on a quad SPI flash" type = "demoCode" scope = "Early Development" path = "module_quad_spi_flash" local = "false" id = "module_quad_spi_flash" name = "Module Quad SPI Flash">
+        <component name = "Module Quad SPI Flash" type = "component" buildresults_path = "module_quad_spi_flash/.module_quad_spi_flash.buildinfo" scope = "Early Development" path = "module_quad_spi_flash" metainfo_path = "module_quad_spi_flash/module_quad_spi_flash.metainfo" local = "false" id = "module_quad_spi_flash" description = "provides library calls to perform I/O on a quad SPI flash">
             <board>XA-SK-FLASH</board>
             <keyword>spi flash quad</keyword>
         </component>
@@ -34,7 +34,7 @@
     <name>sc_flash</name>
     <maintainer>davelxmos</maintainer>
     <partnumber>XM-005034-DH</partnumber>
-    <release parenthash = "b15968a70934b1977291e23bf6b1de8775bf63a7" version = "1.0.0beta0"></release>
+    <release parenthash = "b15968a70934b1977291e23bf6b1de8775bf63a7" version = "1.0.0beta0" githash = "7fb428c91fcc1e42023a0d29cb5a8f0046559bf5"></release>
     <subpartnumber>XM-005035-SM</subpartnumber>
     <vendor>XMOS</vendor>
     <version_defines></version_defines>

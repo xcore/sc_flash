@@ -1,0 +1,77 @@
+-------------------------------------------------------------------------------
+-- Descriptive metadata
+-------------------------------------------------------------------------------
+
+componentName = "Quad SPI flash library"
+componentFullName = ""
+alternativeNames = { }
+componentDescription = "Quad SPI flash library."
+componentVersion = "1v0"
+
+-------------------------------------------------------------------------------
+-- Parameter descriptions.
+-------------------------------------------------------------------------------
+
+configPoints =
+{
+
+}
+
+derivedValues = {}
+
+ports = {
+  p_cs= {
+    short   = "CS",
+    long    = "Chip select",
+    help    = "",
+    width   = 1
+  },
+   p_clk = {
+    short   = "CLK",
+    long    = "Clock",
+    help    = "",
+    width   = 1
+  },
+   p_clk = {
+    short   = "DQ",
+    long    = "Data",
+    help    = "",
+    width   = 4
+  },
+ 
+}
+
+channels = {
+}    
+
+function getConfigStatus()
+  local status = "Trusted Configuration"
+  local issues = {}
+  return status, issues
+end
+            
+-------------------------------------------------------------------------------
+-- Source generation functions
+-------------------------------------------------------------------------------
+
+generatedCode = {
+  includes = {"quad_spi_flash.h"},
+  globals = [[
+    quad_spi_ports qsf_${swblock.id}_resources = { 
+      ${swblock.ports.p_cs},  
+      ${swblock.ports.p_clk}, 
+      ${swblock.ports.p_dq}, 
+      ${swblock.clocks[0]}
+    };
+  ]],
+  body = [[
+  ]]
+}
+
+files = {
+}
+
+api = {
+       'can_server'
+      }
+
