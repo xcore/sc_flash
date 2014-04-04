@@ -1,8 +1,10 @@
 sc_flash
 ........
 
+:Latest release: 1.0.0beta0
 :Maintainer: davelxmos
-:Description: SPI Flash Library.
+:Description: hello
+
 
 Description
 ===========
@@ -12,18 +14,8 @@ SPI Flash Library.
 * This is the development version of the flash library provided with
   the XMOS Development tools
 
-Required software (dependencies)
-================================
-
-  * xcommon (if using development tools earlier than 11.11.0)
-
-
 Quad SPI flash module
 ......................
-
-:Latest release: 1.0.0
-:Maintainer: XMOS
-:Description: Quad SPI flash 
 
 Description
 ===========
@@ -51,4 +43,9 @@ Support
 =======
 
 Issues may be submitted via the Issues tab in this github repo. Response to any issues submitted as at the discretion of the manitainer for this line.
+
+Required software (dependencies)
+================================
+
+  * sc_slicekit_support (https://github.com/xcore/sc_slicekit_support.git)
 

@@ -3,16 +3,16 @@
     <components>
         <component description = "Quad SPI flash" type = "demoCode" scope = "General Use" path = "app_quad_spi_flash_testbench" local = "false" id = "app_quad_spi_flash_testbench" name = "Quad SPI Flash Testbench">
             <board>XA-SK-FLASH</board>
-            <componentDependency repo = "git://github.com/xcore/sc_flash.git">module_quad_spi_flash</componentDependency>
             <componentDependency repo = "git://github.com/xcore/sc_slicekit_support.git" version = "1.0.4">module_slicekit_support</componentDependency>
+            <componentDependency repo = "git://github.com/xcore/sc_flash.git">module_quad_spi_flash</componentDependency>
             <keyword>quad</keyword>
             <keyword>spi</keyword>
             <keyword>flash</keyword>
         </component>
         <component description = "Quad SPI flash" type = "demoCode" scope = "General Use" path = "app_quad_spi_flash_demo" local = "false" id = "app_quad_spi_flash_demo" name = "Quad SPI Flash Demo">
             <board>XA-SK-FLASH</board>
-            <componentDependency repo = "git://github.com/xcore/sc_flash.git">module_quad_spi_flash</componentDependency>
             <componentDependency repo = "git://github.com/xcore/sc_slicekit_support.git" version = "1.0.4">module_slicekit_support</componentDependency>
+            <componentDependency repo = "git://github.com/xcore/sc_flash.git">module_quad_spi_flash</componentDependency>
             <keyword>quad</keyword>
             <keyword>spi</keyword>
             <keyword>flash</keyword>
@@ -23,6 +23,7 @@
         </component>
     </components>
     <dependency repo = "sc_slicekit_support">
+        <gitbranch>master</gitbranch>
         <githash>1fe91159be22d2e358e4dd457c5ed0cd8d17fc18</githash>
         <uri>https://github.com/xcore/sc_slicekit_support.git</uri>
     </dependency>
@@ -33,6 +34,7 @@
     <name>sc_flash</name>
     <maintainer>davelxmos</maintainer>
     <partnumber>XM-005034-DH</partnumber>
+    <release parenthash = "b15968a70934b1977291e23bf6b1de8775bf63a7" version = "1.0.0beta0"></release>
     <subpartnumber>XM-005035-SM</subpartnumber>
     <vendor>XMOS</vendor>
     <version_defines></version_defines>
