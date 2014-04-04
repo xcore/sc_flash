@@ -1,6 +1,31 @@
 <?xml version="1.0" ?>
 <xpd>
-    <components></components>
+    <components>
+        <component description = "Quad SPI flash" type = "demoCode" scope = "General Use" path = "app_quad_spi_flash_testbench" local = "false" id = "app_quad_spi_flash_testbench" name = "Quad SPI Flash Testbench">
+            <board>XA-SK-FLASH</board>
+            <componentDependency repo = "git://github.com/xcore/sc_flash.git">module_quad_spi_flash</componentDependency>
+            <componentDependency repo = "git://github.com/xcore/sc_slicekit_support.git" version = "1.0.4">module_slicekit_support</componentDependency>
+            <keyword>quad</keyword>
+            <keyword>spi</keyword>
+            <keyword>flash</keyword>
+        </component>
+        <component description = "Quad SPI flash" type = "demoCode" scope = "General Use" path = "app_quad_spi_flash_demo" local = "false" id = "app_quad_spi_flash_demo" name = "Quad SPI Flash Demo">
+            <board>XA-SK-FLASH</board>
+            <componentDependency repo = "git://github.com/xcore/sc_flash.git">module_quad_spi_flash</componentDependency>
+            <componentDependency repo = "git://github.com/xcore/sc_slicekit_support.git" version = "1.0.4">module_slicekit_support</componentDependency>
+            <keyword>quad</keyword>
+            <keyword>spi</keyword>
+            <keyword>flash</keyword>
+        </component>
+        <component description = "provides library calls to perform I/O on a quad SPI flash" type = "demoCode" scope = "Early Development" path = "module_quad_spi_flash" local = "false" id = "module_quad_spi_flash" name = "Module Quad SPI Flash">
+            <board>XA-SK-FLASH</board>
+            <keyword>spi flash quad</keyword>
+        </component>
+    </components>
+    <dependency repo = "sc_slicekit_support">
+        <githash>1fe91159be22d2e358e4dd457c5ed0cd8d17fc18</githash>
+        <uri>https://github.com/xcore/sc_slicekit_support.git</uri>
+    </dependency>
     <description>hello</description>
     <exclude_dir>module_flash</exclude_dir>
     <exclude_dir>app_flash_example</exclude_dir>
