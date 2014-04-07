@@ -1,7 +1,7 @@
 sc_flash
 ........
 
-:Latest release: 1.0.1beta0
+:Latest release: 1.0.2beta0
 :Maintainer: davelxmos
 :Description: hello
 
