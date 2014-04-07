@@ -72,16 +72,16 @@ files = {
 }
 
 api = {
-     quad_spi_wait_until_idle
- quad_spi_flash_init
-quad_spi_flash_sector_erase
-quad_spi_flash_block_erase
-quad_spi_flash_chip_erase
-quad_spi_flash_read_status_reg
-quad_spi_flash_write_status_reg
-quad_spi_flash_write_page
- quad_spi_flash_write_sub_page
- quad_spi_flash_device_id
-quad_spi_flash_read_block 
+     'quad_spi_wait_until_idle',
+ 'quad_spi_flash_init',
+'quad_spi_flash_sector_erase',
+'quad_spi_flash_block_erase',
+'quad_spi_flash_chip_erase',
+'quad_spi_flash_read_status_reg',
+'quad_spi_flash_write_status_reg',
+'quad_spi_flash_write_page',
+ 'quad_spi_flash_write_sub_page',
+ 'quad_spi_flash_device_id',
+'quad_spi_flash_read_block'
       }
 
