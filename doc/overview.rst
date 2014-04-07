@@ -17,6 +17,7 @@ The quad SPI flash component has the following features:
      * erase,
      * access to status registers.
   * Runs as a library call, requiring no extra cores or timers.
+  * Unsupported: Continuous read mode, although can be set up through the API. 
 
 Memory Requirements
 +++++++++++++++++++
@@ -24,9 +25,9 @@ Memory Requirements
 +------------------+----------------------------------------+
 | Resource         | Usage                            	    |
 +==================+========================================+
-| Stack            | ??? bytes                              |
+| Stack            | 0 bytes                                |
 +------------------+----------------------------------------+
-| Program          | ????? bytes                            |
+| Program          | 0 bytes                                |
 +------------------+----------------------------------------+
 
 Resource requirements
