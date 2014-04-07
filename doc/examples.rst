@@ -22,12 +22,6 @@ To setup up the system:
    #. Set the ``XMOS LINK`` to ``OFF`` on the XTAG Adapter.
    #. Switch on the power supply to the sliceKIT Core board.
 
-.. figure:: images/hardware_setup.jpg
-   :width: 400px
-   :align: center
-
-   Hardware setup for quad SPI flash demo
-
 Import and Build the Application
 ++++++++++++++++++++++++++++++++
 

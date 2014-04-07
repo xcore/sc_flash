@@ -29,7 +29,7 @@
     </dependency>
     <description>hello</description>
     <docdir>doc</docdir>
-    <docdir>app_quad_spi_flash_demo/doc</docdir>
+    <docdir>app_quad_spi_flash_demo/doc_quickstart</docdir>
     <exclude_dir>module_flash</exclude_dir>
     <exclude_dir>app_flash_example</exclude_dir>
     <location>https://github.com/xcore/sc_flash.git</location>
