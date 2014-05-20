@@ -88,7 +88,7 @@ static void erase(quad_spi_ports &p, unsigned inst, unsigned address){
     p.CS <: CS_HI @ time;
     time += DELAY;
     p.CS @ time <: CS_LO;
-    p.DQ @ time <: ZIP(0x20) | INST_MASK;
+    p.DQ @ time <: ZIP(inst) | INST_MASK;
     p.CS @ time + 32 <: CS_HI;
     p.DQ <: a_msb;
     p.DQ <: a;
