@@ -12,3 +12,8 @@ Quad SPI flash components change log
 1.0.2
 -----
    * doc update
+
+1.0.3
+-----
+   * fixed bug in erase()
+
