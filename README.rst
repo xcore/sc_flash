@@ -3,27 +3,29 @@ sc_flash
 
 :Latest release: 1.0.3beta0
 :Maintainer: davelxmos
-:Description: hello
+:Description: SPI Flash Libraries
 
+SPI flash module (module_flash)
+===============================
 
 Description
-===========
+-----------
 
 SPI Flash Library.
 
 * This is the development version of the flash library provided with
   the XMOS Development tools
 
-Quad SPI flash module
-......................
+Quad SPI flash module (module_quad_spi_flash)
+=============================================
 
 Description
-===========
+-----------
 
 Quad SPI flash library.
 
 Key Features
-============
+------------
 
  * Supports via API
      * read,
