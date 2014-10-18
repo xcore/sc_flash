@@ -755,18 +755,7 @@ int fl_startImageReplace(fl_BootImageInfo* bootImageInfo, unsigned maxsize)
       return -1;
     return fl_initImageWriteState(bootImageInfo->startAddress, maxsize, bootImageInfo);
   }
-  /* This is unnecessary if we are erasing the first sector but it does no
-   * harm. We would need to keep additional state to avoid waiting before the
-   * first erase. */
-  fl_int_waitWhileWriting(g_flashAccess);
-  fl_eraseSectorAsync(fl_imageWriteState.eraseSector);
-  if (fl_getSectorEndAddress(fl_imageWriteState.eraseSector) < fl_imageWriteState.limitAddress) {
-    fl_imageWriteState.eraseSector++;
-    return 1;
-  }
-  /* Erasure complete. */
-  fl_imageWriteState.eraseSector = 0;
-  return 0;
+  return fl_startAddImageCommon();
 }
 
 #define VALIDATE
