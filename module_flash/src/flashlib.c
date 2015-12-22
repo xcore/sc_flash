@@ -963,6 +963,61 @@ int fl_writeData(unsigned int offset, unsigned int size,
   return( 0 );
 }
 
+/* Write and arbitrary number of bytes to the store (endangers data sharing pages/sectors),
+ * block by block.
+ */
+int fl_writeDataAsBlocks(unsigned int offset, unsigned int size,
+                      const unsigned char src[], unsigned char buffer[]) {
+  unsigned blockSize = g_flashAccess->sectorEraseSize;
+  if (blockSize == 0) {
+    return 1;   // Used memory type cannot erase individual blocks
+  }
+
+  unsigned startAddress = fl_getDataPartitionBase() + offset;
+
+  // Remember the address of the first block thet needs to be buffered.
+  // If block remainder is zero, then the address is the start address.
+  unsigned firstBlockDataStartAddress = startAddress % blockSize;
+  unsigned blockStartAddress = startAddress - firstBlockDataStartAddress;
+  unsigned firstBlockRemainder = blockSize - firstBlockDataStartAddress;
+
+  unsigned totalBlocksUsed = 1;
+  if (size > firstBlockRemainder) {
+    totalBlocksUsed += (size - firstBlockRemainder) / blockSize;
+    if ((size - firstBlockRemainder) % blockSize != 0) {
+      totalBlocksUsed++;
+    }
+  }
+
+  // Store all of the blocks that will be erased into a buffer
+  if (fl_int_readBytes(g_flashAccess, blockStartAddress, buffer, totalBlocksUsed * blockSize) != 0) {
+    return 1;
+  }
+
+  // Overwrite the old data with new
+  memcpy(buffer + firstBlockDataStartAddress, src, size);
+
+  // Erase blocks
+  for (int i = 0; i < totalBlocksUsed; i++) {
+    fl_int_waitWhileWriting(g_flashAccess);
+    fl_setWritability(1);
+    fl_int_issueShortCommand(g_flashAccess->sectorEraseCommand, blockStartAddress + i * blockSize, 3, 0, 0);
+  }
+
+  fl_int_waitWhileWriting(g_flashAccess);
+  fl_setWritability(0);
+
+  // Write the new blocks into memory page by page
+  int totalPagesToWriteBack = totalBlocksUsed * (blockSize / fl_getPageSize());
+  for (int i = 0; i < totalPagesToWriteBack; i++) {
+    if (fl_writePage(blockStartAddress + i * 256, buffer + i * 256) != 0) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
 int fl_int_copySpec( fl_DeviceSpec* dest )
 {
   if( NULL == g_flashAccess )

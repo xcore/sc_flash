@@ -409,6 +409,25 @@ unsigned fl_getWriteScratchSize(unsigned offset, unsigned size);
 int fl_writeData(unsigned offset, unsigned size, const unsigned char src[],
                  unsigned char buffer[]);
 
+/* Block level functions */
+
+/**
+ * Write data to the data partition as blocks. A buffer is used to save
+ * the current data inside blocks that will be erased. The minimum size
+ * of the required buffer should be the same size as data being written, plus
+ * the size of 2 blocks. This function is used to minimize the regions of
+ * memory that need to be erased during data editing. Since not all memories
+ * support this feature, this function can be used on memories that have the
+ * sector erase size defined.
+ * \param offset The offset from the start of the data partition in bytes.
+ * \param size The number of bytes to write.
+ * \param src The data to write.
+ * \param buffer
+ * \return 0 on success, non zero on failure.
+ */
+int fl_writeDataAsBlocks(unsigned int offset, unsigned int size,
+                       const unsigned char src[], unsigned char buffer[]);
+
 /* Page level functions. */
 
 /**
